@@ -1,0 +1,16 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "pl.dezo.clientmod.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "dezoclientmod-refmap.json",
+  "client": [
+    "TitleScreenMixin",
+    "MinecraftClientMixin",
+    "DebugHudMixin",
+    "LogoDrawerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  }
+}
