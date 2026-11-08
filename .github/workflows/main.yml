@@ -1,0 +1,37 @@
+name: Build DezoClient Mod
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch: # Pozwala na ręczne uruchomienie budowania z poziomu strony GitHuba
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Pobieranie repozytorium (Checkout)
+        uses: actions/checkout@v4
+
+      - name: Konfiguracja środowiska Java 21 (wymagane dla MC 1.21+)
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Weryfikacja cache Gradle (przyspiesza kolejne budowania)
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Nadawanie uprawnień do uruchomienia Gradle
+        run: chmod +x gradlew
+
+      - name: Kompilacja moda (Build)
+        run: ./gradlew build
+
+      - name: Zapisywanie gotowego pliku .jar (Artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: dezo-client-mod-1.21.11-build
+          path: build/libs/*.jar
